@@ -18,7 +18,7 @@ This Dockerfile allows you to host a static webpage on a port of your choice usi
   -Firewall or security group allowing inbound traffic on port 80.
 
 <h3>🔧 Build the Docker Image</h3>
--docker build -t your_image_name.
+docker build -t your_image_name.
 
 <h3>🚀 Run the Docker Container</h3>
 docker run -d --name your_container_name -p 80:80 your_image_name
