@@ -1,6 +1,6 @@
 # DOCKER FILES
 
-# 1) static_website:
+<h1># 1) static_website:</h1>
    -This docker file consists of hosting a static webpage on a port of the user's choice by 
    -To build the docker image run the command: docker build -t docker_tag_name .
    -After the docker image has been successfully built run the following command to create a container for the image: docker run -d --name container_name -p 80:80 docker_tag_name
