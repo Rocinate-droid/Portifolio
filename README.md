@@ -1,11 +1,42 @@
- <h1>DOCKER FILES</h1>
+Docker Files
+1) Static Website
+This Dockerfile allows you to host a static webpage on a port of your choice. You can run it locally or deploy it to a cloud-based virtual machine for public access.
 
-<h2>1) static_website:</h2>
-   <p>-This docker file consists of hosting a static webpage on a port of the user's choice by </n>
-   -To build the docker image run the command: docker build -t docker_tag_name. <n>
-   -After the docker image has been successfully built run the following command to create a container for the image: docker run -d --name container_name -p 80:80 docker_tag_name <n>
-   -You can host the static website either on your local machine or you can also choose to host it on an virtual machine instance on any of the cloud platforms which will allow it to be accessible to anyone on the 
-    internet provided they have the public ip of the virtual machine and the port number of the container and the security group must have necessary permissions for the site to be accessible <n>
-    -If you are hosting it in your local machine use the address: localhost:80 <n>
-    -If you are hosting it in a VM instance use the the address: public-ip-of-instance:80 <n>
-   </p>
+✅ Prerequisites
+Before you begin, make sure you have the following installed:
+
+Docker installed on your system.
+
+Basic understanding of how to use the command line.
+
+(Optional) A cloud provider account (e.g., AWS, GCP, Azure) if deploying on a virtual machine.
+
+If using a cloud VM:
+
+A public IP address.
+
+Firewall or security group allowing inbound traffic on port 80.
+
+🔧 Build the Docker Image
+bash
+Copy
+Edit
+docker build -t your_image_name .
+🚀 Run the Docker Container
+bash
+Copy
+Edit
+docker run -d --name your_container_name -p 80:80 your_image_name
+🌐 Accessing the Website
+Local Machine:
+Visit http://localhost:80
+
+Cloud VM Instance:
+Visit http://<your-public-ip>:80
+
+Make sure:
+
+Port 80 is open in your VM's firewall or security group settings.
+
+The Docker container is running and mapped correctly.
+
