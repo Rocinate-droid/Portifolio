@@ -4,13 +4,9 @@ This Dockerfile allows you to host a static webpage on a port of your choice. Yo
 
 <h3>✅ Prerequisites</h3>
 -Before you begin, make sure you have the following installed:
-
 -Docker installed on your system.
-
 -Basic understanding of how to use the command line.
-
 -(Optional) A cloud provider account (e.g., AWS, GCP, Azure) if deploying on a virtual machine.
-
 -If using a cloud VM:
 
   -A public IP address.
@@ -30,8 +26,6 @@ Cloud VM Instance:
 Visit http://<your-public-ip>:80
 
 <h3>Make sure:</h3>
-
 -Port 80 is open in your VM's firewall or security group settings.
-
 -The Docker container is running and mapped correctly.
 
