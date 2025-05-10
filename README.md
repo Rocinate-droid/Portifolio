@@ -31,5 +31,6 @@ Visit http://your-public-ip:80
 
 <h3>Make sure:</h3>
 -Port 80 is open in your VM's firewall or security group settings.
+
 -The Docker container is running and mapped correctly.
 
