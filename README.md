@@ -27,7 +27,7 @@ Local Machine:
 Visit http://localhost:80
 
 Cloud VM Instance:
-Visit http://<your-public-ip>:80
+Visit http://your-public-ip:80
 
 <h3>Make sure:</h3>
 -Port 80 is open in your VM's firewall or security group settings.
