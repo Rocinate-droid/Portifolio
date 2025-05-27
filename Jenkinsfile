@@ -14,7 +14,7 @@ pipeline {
         }
         stage ("Create docker file") {
             steps {
-                sh 'docker build --t nginx-image .'
+                sh 'docker build -t nginx-image .'
             }
         }
         stage ("Start docker service") {
