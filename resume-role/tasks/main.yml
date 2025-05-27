@@ -16,6 +16,10 @@
     name: docker
     state: started
     enabled: yes
+- name: python sdk install
+  apt:
+    name: python3-docker
+    state: present
 - name: Join swarm as worker
   community.docker.docker_swarm:
     state: join
