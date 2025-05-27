@@ -3,4 +3,4 @@
   hosts: webservers
   become: true
   roles:
-    resume_role
+    - resume-role

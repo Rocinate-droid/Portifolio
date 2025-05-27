@@ -1,19 +1,24 @@
 ---
 # tasks file for resume-role
-      apt:
-           update_cache: yes
-      apt:
-           name: openjdk-17-jdk
-           state: present
-      apt:
-           name: docker.io
-           state: present
-      service:
-               name: docker
-               state: started
-               enabled: yes
-      community.docker.docker_swarm:
-               state: join
-               join_token: "{{token}}"
-               remote_addrs: ["172.31.178.249"]
-               advertise_addr: ["172.31.12.9"]
+- name: packages update
+  apt:
+    update_cache: yes
+- name: install java
+  apt:
+    name: openjdk-17-jdk
+    state: present
+- name: install docker
+  apt:
+    name: docker.io
+    state: present
+- name: run docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes
+- name: Join swarm as worker
+  community.docker.docker_swarm:
+    state: join
+    join_token: "SWMTKN-1-2h86yx7s1uk23o3vxsg1l1s0mjpp4k10lr96mivdaaptkpr9as-7azmgytz45bq4vq5l0p7q557x"
+    remote_addrs: ["172.31.178.249"]
+    advertise_addr: "172.31.12.9"
