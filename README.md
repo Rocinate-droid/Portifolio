@@ -1,5 +1,5 @@
 # Docker Files
-<h2> 1) static_website hosting </h2>
+<h2> 1) static_website hosting 1 </h2>
 This Dockerfile allows you to host a static webpage on a port of your choice using nginx. You can run it locally or deploy it to a cloud-based virtual machine for public access.
 
 <h3>✅ Prerequisites</h3>
