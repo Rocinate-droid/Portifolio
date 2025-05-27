@@ -16,6 +16,11 @@
     name: docker
     state: started
     enabled: yes
+- name: Ensure Docker SDK for Python is installed
+  ansible.builtin.pip:
+    name: docker
+    state: present
+    executable: pip3
 - name: Join swarm as worker
   community.docker.docker_swarm:
     state: join
