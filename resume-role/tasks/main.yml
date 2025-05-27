@@ -1,0 +1,19 @@
+---
+# tasks file for resume-role
+      apt:
+           update_cache: yes
+      apt:
+           name: openjdk-17-jdk
+           state: present
+      apt:
+           name: docker.io
+           state: present
+      service:
+               name: docker
+               state: started
+               enabled: yes
+      community.docker.docker_swarm:
+               state: join
+               join_token: "{{token}}"
+               remote_addrs: ["172.31.178.249"]
+               advertise_addr: ["172.31.12.9"]
