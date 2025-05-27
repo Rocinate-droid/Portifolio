@@ -1,7 +1,6 @@
 ---
 - name: resume-playbook
   hosts: webservers
-  remote_user: ubuntu
   become: yes
   roles:
     - resume-role
