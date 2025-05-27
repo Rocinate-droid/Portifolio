@@ -9,7 +9,7 @@ pipeline {
         }
         stage ("execute ansible playbook") {
             steps {
-               sh 'ansible-playbook playbook.yml'
+                  sh 'ansible-playbook playbook.yml'
             }
         }
         stage ("Create docker file") {
