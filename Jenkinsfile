@@ -6,4 +6,5 @@ pipeline {
                 git branch: 'resume_build', changelog: false, poll: false, url: 'https://github.com/Rocinate-droid/Portifolio.git'
             }
         }
+    }
 }
