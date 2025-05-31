@@ -1,15 +1,27 @@
 pipeline {
     agent any
+    enviornment {
+       VAULT_PASSWORD = credentials("vault_password")
+    }
     stages {
         stage ("Git SCM pull") {
             steps {
-                git branch: 'resume_build', changelog: false, poll: false, url: 'https://github.com/Rocinate-droid/Portifolio.git'
+                git branch: 'local_build', changelog: false, poll: false, url: 'https://github.com/Rocinate-droid/Portifolio.git'
                 sh 'whoami'
+            }
+        }
+         stage ("execute terraform build") {
+            steps {
+                sh 'terraform apply --auto-approve
             }
         }
         stage ("execute ansible playbook") {
             steps {
-                  sh 'ansible-playbook playbook.yml'
+                  sh '''
+                     echo "$VAULT_PASSWORD" > password.txt
+                     ansible-playbook playbook.yml --vault-password-file password.txt
+                     rm password.txt
+                     '''
             }
         }
         stage ("Create docker file") {

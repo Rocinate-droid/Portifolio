@@ -23,6 +23,6 @@
 - name: Join swarm as worker
   community.docker.docker_swarm:
     state: join
-    join_token: "SWMTKN-1-2h86yx7s1uk23o3vxsg1l1s0mjpp4k10lr96mivdaaptkpr9as-7azmgytz45bq4vq5l0p7q557x"
-    remote_addrs: ["172.31.178.249"]
-    advertise_addr: "172.31.12.9"
+    join_token: "{{swarm_token}}"
+    remote_addrs: ["10.0.2.50"]
+    advertise_addr: "10.0.2.206"
