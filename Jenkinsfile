@@ -12,7 +12,10 @@ pipeline {
         }
          stage ("execute terraform build") {
             steps {
-                sh 'terraform apply --auto-approve'
+                sh '''
+                   terraform init
+                   terraform apply --auto-approve
+                   '''
             }
         }
         stage ("execute ansible playbook") {
