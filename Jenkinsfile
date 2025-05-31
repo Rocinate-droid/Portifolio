@@ -14,19 +14,18 @@ pipeline {
         }
          stage ("execute terraform build") {
           
-            steps {
-                   withCredentials([
+            withCredentials([
                     usernamePassword(
                         credentialsId: 'aws_creds',
                         usernameVariable: 'AWS_ACCESS_KEY_ID',
                         passwordVariable: 'AWS_SECRET_ACCESS_KEY'
                     )
-                ]){
+                ])
+            steps {
                 sh '''
                    terraform init
                    terraform apply --auto-approve
                    '''
-               
             }
         }
         stage ("execute ansible playbook") {
