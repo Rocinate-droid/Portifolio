@@ -1,60 +1,52 @@
 pipeline {
     agent any
-
     environment {
-        AWS_REGION = 'us-east-1'
+       VAULT_PASSWORD = credentials("vault_password")
+       AWS_ACCESS_KEY_ID = credentials('aws_access_key_id')         // Use Jenkins credentials
+       AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
     }
-
     stages {
-        stage("Git SCM pull") {
+        stage ("Git SCM pull") {
             steps {
                 git branch: 'resume_build', changelog: false, poll: false, url: 'https://github.com/Rocinate-droid/Portifolio.git'
-                sh 'env | grep AWS'
+                sh 'env | grep aws'
             }
         }
-
-        stage("execute terraform build") {
+         stage ("execute terraform build") {
+          
             steps {
-                withCredentials([
+                   withCredentials([
                     usernamePassword(
                         credentialsId: 'aws_creds',
                         usernameVariable: 'AWS_ACCESS_KEY_ID',
                         passwordVariable: 'AWS_SECRET_ACCESS_KEY'
                     )
-                ]) {
-                    sh '''
-                        terraform init
-                        terraform apply --auto-approve
-                    '''
-                }
+                ]){
+                sh '''
+                   terraform init
+                   terraform apply --auto-approve
+                   '''
+               
             }
         }
-
-        stage("execute ansible playbook") {
+        stage ("execute ansible playbook") {
             steps {
-                withCredentials([
-                    string(credentialsId: 'vault_password', variable: 'VAULT_PASSWORD')
-                ]) {
-                    sh '''
-                        echo "$VAULT_PASSWORD" > password.txt
-                        ansible-playbook playbook.yml --vault-password-file password.txt
-                        rm password.txt
-                    '''
-                }
+                  sh '''
+                     echo "$VAULT_PASSWORD" > password.txt
+                     ansible-playbook playbook.yml --vault-password-file password.txt
+                     rm password.txt
+                     '''
             }
         }
-
-        stage("Create docker image") {
+        stage ("Create docker file") {
             steps {
-                sh 'docker build -t nginx-image .'
+                sh 'sudo docker build -t nginx-image .'
             }
         }
-
-        stage("Start docker service for image") {
+        stage ("Start docker service for image") {
             steps {
-                sh 'docker service create --name nginx-service --replicas=3 -p 80:80 nginx-image'
+                sh 'sudo docker service create --name nginx-service --replicas=3 -p 80:80 nginx-image'
             }
         }
     }
 }
-
