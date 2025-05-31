@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment {
-       VAULT_PASSWORD = credentials("vault_password")
-    }
     stages {
         stage ("Git SCM pull") {
             steps {
@@ -11,18 +8,11 @@ pipeline {
             }
         }
          stage ("execute terraform build") {
-            steps {
-                 withEnv([
-                    'AWS_ACCESS_KEY_ID=AKIASHXWDM3EMIEA2O2B',
-                    'AWS_SECRET_ACCESS_KEY=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',
-                    'AWS_REGION=us-east-1'
-                ])
                 sh '''
                    terraform init
                    terraform apply --auto-approve
                    '''
             }
-        }
         stage ("execute ansible playbook") {
             steps {
                   sh '''
