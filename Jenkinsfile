@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    enviornment {
+    environment {
        VAULT_PASSWORD = credentials("vault_password")
     }
     stages {
