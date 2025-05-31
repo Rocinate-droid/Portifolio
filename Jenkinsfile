@@ -2,21 +2,21 @@ pipeline {
     agent any
     environment {
        VAULT_PASSWORD = credentials("vault_password")
+       AWS_ACCESS_KEY_ID = credentials('aws_access_key_id')         // Use Jenkins credentials
+       AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
     }
     stages {
         stage ("Git SCM pull") {
             steps {
                 git branch: 'resume_build', changelog: false, poll: false, url: 'https://github.com/Rocinate-droid/Portifolio.git'
-                sh 'whoami'
+                sh '''
+                   whoami
+                   env | grep aws
+                   '''
             }
         }
          stage ("execute terraform build") {
             steps {
-                 withEnv([
-                    'AWS_ACCESS_KEY_ID=AKIASHXWDM3EMIEA2O2B',
-                    'AWS_SECRET_ACCESS_KEY=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',
-                    'AWS_REGION=us-east-1'
-                ])
                 sh '''
                    terraform init
                    terraform apply --auto-approve
