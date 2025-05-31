@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage ("Git SCM pull") {
             steps {
-                git branch: 'local_build', changelog: false, poll: false, url: 'https://github.com/Rocinate-droid/Portifolio.git'
+                git branch: 'resume_build', changelog: false, poll: false, url: 'https://github.com/Rocinate-droid/Portifolio.git'
                 sh 'whoami'
             }
         }
