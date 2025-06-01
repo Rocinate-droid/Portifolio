@@ -20,11 +20,13 @@ pipeline {
             }
         stage ("execute ansible playbook") {
             steps {
-                  sh '''
-                     echo "$VAULT_PASSWORD" > password.txt
-                     ansible-playbook playbook.yml --vault-password-file password.txt
-                     rm password.txt
-                     '''
+              withCredentials([string(credentialsId: 'vault_password', variable: 'VAULT_PASSWORD')]) {
+            sh '''
+                echo "$VAULT_PASSWORD" > password.txt
+                ansible-playbook playbook.yml --vault-password-file password.txt
+                rm password.txt
+            '''
+                }
             }
         }
         stage ("Create docker file") {
