@@ -25,4 +25,4 @@
     state: join
     join_token: "{{swarm_token}}"
     remote_addrs: ["10.0.2.50"]
-    advertise_addr: "10.0.2.194"
+    advertise_addr: "10.0.2.100"

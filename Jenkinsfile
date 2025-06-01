@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        VAULT_PASSWORD    = 'vault_password'
+    }
     stages {
         stage ("Git SCM pull") {
             steps {
