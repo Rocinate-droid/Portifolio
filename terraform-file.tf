@@ -13,7 +13,7 @@ terraform {
 
 resource "aws_instance" "node-server" {
 
- ami = "ami-084568db4383264d4"
+ ami = "ami-06c8f2ec674c67112"
  instance_type = "t2.micro"
  key_name = "demokey"
  user_data = <<-EOF
