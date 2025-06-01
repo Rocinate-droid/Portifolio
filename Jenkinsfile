@@ -32,12 +32,12 @@ pipeline {
         }
         stage ("Create docker file") {
             steps {
-                sh 'sudo docker build -t nginx-image .'
+                sh 'sudo docker build -t nginx-image:v2 .'
             }
         }
         stage ("Start docker service for image") {
             steps {
-                sh 'sudo docker service update --image nginx-image nginx-service'
+                sh 'sudo docker service update --image nginx-image:v2 nginx-service'
             }
         }
     }
