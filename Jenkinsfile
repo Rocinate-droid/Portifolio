@@ -37,7 +37,7 @@ pipeline {
         }
         stage ("Start docker service for image") {
             steps {
-                sh 'sudo docker service create --name nginx-service --replicas=5 -p 80:80 nginx-image'
+                sh 'sudo docker service update --image nginx-image nginx-service'
             }
         }
     }
