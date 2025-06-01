@@ -30,14 +30,17 @@ pipeline {
                 }
             }
         }
-        stage ("Create docker file") {
+        stage ("Create docker file and update in docker hub") {
             steps {
-                sh 'sudo docker build -t nginx-image:v2 .'
+                sh '''
+                   sudo docker build -t nginx-image:v2 .
+                   docker tag nginx-image:v2 typicalguy/nginx-image:v2
+                   docker push typicalguy/newrepo:typicalguy/nginx-image:v2
             }
         }
         stage ("Start docker service for image") {
             steps {
-                sh 'sudo docker service update --image nginx-image:v2 nginx-service'
+                sh 'sudo docker service update --image typicalguy/nginx-image:v2 nginx-service'
             }
         }
     }
