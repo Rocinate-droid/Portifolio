@@ -22,6 +22,7 @@ pipeline {
             steps {
               withCredentials([string(credentialsId: 'vault_password', variable: 'VAULT_PASSWORD')]) {
             sh '''
+                ansible -m ping webservers
                 echo "$VAULT_PASSWORD" > password.txt
                 ansible-playbook playbook.yml --vault-password-file password.txt
                 rm password.txt
