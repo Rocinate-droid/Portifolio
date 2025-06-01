@@ -36,6 +36,7 @@ pipeline {
                    sudo docker build -t nginx-image:v2 .
                    docker tag nginx-image:v2 typicalguy/nginx-image:v2
                    docker push typicalguy/newrepo:typicalguy/nginx-image:v2
+                   '''
             }
         }
         stage ("Start docker service for image") {
