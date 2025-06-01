@@ -50,9 +50,9 @@ resource "aws_instance" "node-server" {
 
  resource "aws_network_interface" "resume-nif" {
 
- subnet_id = "subnet-00a46b30958642eee"
+ subnet_id = "subnet-093b3e9368f466a11"
  private_ips     = ["10.0.2.50"]
- security_groups = ["sg-0b865de3f21d869e9"]
+ security_groups = ["sg-09269749f5cffcbf9"]
 
 }
 
