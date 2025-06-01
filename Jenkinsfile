@@ -35,7 +35,7 @@ pipeline {
                 sh '''
                    sudo docker build -t nginx-image:v2 .
                    sudo docker tag nginx-image:v2 typicalguy/nginx-image:v2
-                   sudo docker push typicalguy/newrepo:typicalguy/nginx-image:v2
+                   sudo docker push typicalguy/nginx-image:v2
                    '''
             }
         }
