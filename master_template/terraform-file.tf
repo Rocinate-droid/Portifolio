@@ -51,6 +51,12 @@ variable "role" {
   type = string
 }
 
+variable "master-private-ip" {
+  description = "private-ip-master"
+  default = "10.0.2.100"
+  type = string
+}
+
 
 resource "aws_vpc" "resume-vpc" {
         cidr_block = var.vpc-cidr
@@ -214,19 +220,19 @@ network_interface {
 
 resource "aws_network_interface" "niw-master" {
   subnet_id       = aws_subnet.resume-subnet.id
-  private_ips     = ["10.0.2.100"]
+  private_ips     = [var.master-private-ip]
   security_groups = [aws_security_group.resume-sg.id]
 }
 
 resource "aws_eip" "eip-master" {
     domain = "vpc"
-    associate_with_private_ip = "10.0.2.100"
+    associate_with_private_ip = var.master-private-ip
 }
 
 resource "aws_eip_association" "eip-assoc-master" {
     allocation_id = aws_eip.eip-master.id
     network_interface_id = aws_network_interface.niw-master.id
-    private_ip_address = "10.0.2.100"
+    private_ip_address = var.master-private-ip
 }
 
 output "security-group-id" {
