@@ -31,7 +31,6 @@ This project demonstrates a complete Infrastructure as Code (IaC) pipeline to pr
 - You can deploy **any web application** by simply modifying the `Dockerfile` according to your app's requirements.
 
 ---
-![Architecture Diagram](Architecture.png)
 
 ## 📁 Terraform Modules
 
