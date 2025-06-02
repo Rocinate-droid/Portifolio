@@ -1,0 +1,7 @@
+region = "us-east-1"
+vpc-cidr = "10.0.2.0/24"
+subnet-cidr = "10.0.2.0/24"
+ami = "ami-084568db4383264d4"
+instance-type = "t2.micro"
+key = "demokey"
+role = "CICD"
