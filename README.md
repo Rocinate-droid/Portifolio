@@ -17,6 +17,7 @@ This project demonstrates a complete Infrastructure as Code (IaC) pipeline to pr
 ### ⚙️ Configuration Management
 - Server configuration is automated via **Ansible Playbooks**.
 - Uses **Ansible roles** for modular playbooks and **Ansible Vault** for secure storage of secrets.
+- Shell scripts are used for automating manual deployment tasks.
 
 ### 🔐 Security
 - Resources are launched in a **custom VPC** with specific **subnets**, **network interfaces**, **security groups**, and **private IPs**.
@@ -34,9 +35,24 @@ This project demonstrates a complete Infrastructure as Code (IaC) pipeline to pr
 ## 📁 Terraform Modules
 
 - **`instance_template`**: Provisions the **master server** along with its VPC, subnet, and security groups. Configuration is bootstrapped via **cloud-init**.
-- **`node_template`**: Provisions **worker nodes** that join the Docker Swarm cluster.
+- **`node_template`**: Provisions **worker nodes** that join the Docker Swarm cluster (You can increase the no of nodes needed as per your need by modifying this template but also take care to add and modify the variables also)
 
 ---
+## Terraform variables
+
+## 📥 Terraform Variables
+
+| Variable            | Description                                     |
+|---------------------|-------------------------------------------------|
+| `region`            | Region where your instance will be deployed     |
+| `vpc-cidr`          | CIDR block for the VPC                          |
+| `subnet-cidr`       | CIDR block for the subnet                       |
+| `ami`               | AMI ID to launch the EC2 instance               |
+| `instance-type`     | EC2 instance type (e.g., t2.micro)              |
+| `key`               | Key pair name to access the instance            |
+| `role`              | IAM role name (should allow EC2 access)         |
+| `private-ip`        | Private IP of the node instance                 |
+| `master-private-ip` | Private IP of the master instance               |
 
 ## 🚀 Usage Instructions
 
@@ -49,9 +65,9 @@ cd your-repo
 ## 2. AWS Credentials & Key Setup
 
 - Generate **Access Key** and **Secret Key** from your AWS account.
-- Create an **IAM Role** named `CICD` with EC2 access.
-- Generate an **EC2 key pair** named `demokeynew`.  
-  *(You may change the name, but make sure to update it in the `instance_template`.)*
+- Create an **IAM Role** with EC2 access.
+- Generate an **EC2 key pair**  
+  *(Take care to change the IAM role and EC2 key pair in the terraform variables.)*
 
 ---
 
@@ -66,31 +82,16 @@ export AWS_SECRET_ACCESS_KEY="your-secret-key"
 
 ### 4. Deploy the Master Server
 
+- Go to the master template folder and execute the following command:
 ```bash
-cd instance_template
-terraform init
-terraform apply
-```
-
----
-
-### 5. Install Terraform on the Master Server
-
-SSH into the master server and run:
-
-```bash
-wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-
-sudo apt update && sudo apt install terraform
+bash create.sh
 ```
 
 ---
 
 ### 6. Set Up SSH Key for Nodes
 
-Inside the master server:
+Inside the master instance:
 
 ```bash
 ssh-keygen
@@ -101,6 +102,8 @@ ssh-keygen
 ---
 
 ### 7. Initialize Docker Swarm
+
+Inside the master instance:
 
 ```bash
 docker swarm init
@@ -122,16 +125,9 @@ ansible-vault edit main.yml
 
 ---
 
-### 9. Update Node Template
-
-In the `node_template`:
-
-- Replace `subnet_id` and `security_group_id` with the IDs created during the master server deployment in `instance_template`.
-
----
-
 ### 10. Deploy Nodes
 
+- Inside the master instance
 ```bash
 cd node_template
 terraform init
@@ -148,7 +144,7 @@ terraform apply
 http://<master-public-ip>:8080
 ```
 
-- Add a Jenkins **credential**:
+- Add a Jenkins **credential** for accessing ansible vault(swarm token):
 
   - **ID**: `vault_password`  
   - **Secret Text**: `devops`
@@ -169,4 +165,5 @@ Visit your deployed web application:
 
 ```
 http://<master-public-ip>:80
+http://<node-public-ip>:80
 ```
