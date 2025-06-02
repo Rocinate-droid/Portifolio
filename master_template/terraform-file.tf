@@ -180,7 +180,6 @@ resource "aws_instance" "resume-master" {
   user_data = <<-EOF
                         #!/bin/bash
                         apt update
-                        apt install nginx -y
                         apt install docker.io -y
                         apt install openjdk-17-jdk -y
                         wget -O /etc/apt/keyrings/jenkins-keyring.asc \
@@ -191,6 +190,12 @@ resource "aws_instance" "resume-master" {
                         apt update
                         apt install jenkins -y
                         apt install ansible -y
+                        apt install unzip -y
+                        cd /tmp
+                        wget https://releases.hashicorp.com/terraform/1.8.4/terraform_1.8.4_linux_amd64.zip
+                        unzip terraform_1.8.4_linux_amd64.zip
+                        mv terraform /usr/local/bin/
+                        chmod +x /usr/local/bin/terraform
                         mkdir -p /etc/ansible
                         echo "[webservers]" > /etc/ansible/hosts
                         echo "jenkins ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
