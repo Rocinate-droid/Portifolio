@@ -28,13 +28,13 @@ This project demonstrates a complete Infrastructure as Code (IaC) pipeline to pr
 - Manages credentials securely and reduces deployment time.
 
 ### 🔧 Web App Deployment
-- You can deploy **any web application** by simply modifying the `Dockerfile` according to your app's requirements.
+- You can deploy **any web application** by simply modifying the `Dockerfile` according to your app's requirements and also changing same in Jenkinsfile.
 
 ---
 
 ## 📁 Terraform Modules
 
-- **`instance_template`**: Provisions the **master server** along with its VPC, subnet, and security groups. Configuration is bootstrapped via **cloud-init**.
+- **`master_template`**: Provisions the **master server** along with its VPC, subnet, and security groups. Configuration is bootstrapped via **cloud-init**.
 - **`node_template`**: Provisions **worker nodes** that join the Docker Swarm cluster (You can increase the no of nodes needed as per your need by modifying this template but also take care to add and modify the variables also)
 
 ---
@@ -59,7 +59,7 @@ This project demonstrates a complete Infrastructure as Code (IaC) pipeline to pr
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/your-repo.git
+git clone https://github.com/Rocinate-droid/Devops-Project.git
 cd your-repo
 
 ## 2. AWS Credentials & Key Setup
@@ -125,18 +125,7 @@ ansible-vault edit main.yml
 
 ---
 
-### 10. Deploy Nodes
-
-- Inside the master instance
-```bash
-cd node_template
-terraform init
-terraform apply
-```
-
----
-
-### 11. Jenkins Setup
+### 9. Jenkins Setup
 
 - Visit Jenkins at:
 
@@ -151,17 +140,17 @@ http://<master-public-ip>:8080
 
 ---
 
-### 12. Setup Pipeline
+### 10. Setup Pipeline
 
 - Push your files to a **GitHub repository**.
-- Create a **Pipeline Job** in Jenkins and link it to your GitHub repo.
+- Create a **Pipeline Job** in Jenkins and change the git credentials in the Jenkins file before the build.
 - Trigger the pipeline to deploy the application.
 
 ---
 
-### 13. Access Your Web Application
+### 11. Access Your Web Application
 
-Visit your deployed web application:
+Visit your deployed web application(uses nginx service):
 
 ```
 http://<master-public-ip>:80
