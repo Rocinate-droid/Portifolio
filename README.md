@@ -67,7 +67,7 @@ cd your-repo
 - Generate **Access Key** and **Secret Key** from your AWS account.
 - Create an **IAM Role** with EC2 access.
 - Generate an **EC2 key pair**  
-  *(Take care to change the IAM role and EC2 key pair in the terraform variables.)*
+  *(Take care to change the IAM role and EC2 key pair in the terraform variables inside master_template.)*
 
 ---
 
@@ -143,7 +143,7 @@ http://<master-public-ip>:8080
 ### 10. Setup Pipeline
 
 - Push your files to a **GitHub repository**.
-- Create a **Pipeline Job** in Jenkins and change the git credentials in the Jenkins file before the build.
+- Create a **Pipeline Job** in Jenkins using the repositery.
 - Trigger the pipeline to deploy the application.
 
 ---
