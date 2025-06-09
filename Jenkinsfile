@@ -1,12 +1,9 @@
 pipeline {
     agent any
+    environment {
+        VAULT_PASSWORD = 'vault_password'
+    }
     stages {
-        stage ("Git SCM pull") {
-            steps {
-               git branch: 'resume_build', changelog: false, poll: false, url: 'https://github.com/Rocinate-droid/Portifolio.git' //change github credentials here
-                sh 'whoami'
-            }
-        }
          stage ("execute terraform build") {
             steps {
                 // change the command to terraform destroy --auto-approve after the usage and run the pipeline again to clean up node-instance aws resources
@@ -35,8 +32,8 @@ pipeline {
                 //update docker image details here if needed
                 sh ''' 
                    sudo docker build -t nginx-image:v2 . 
-                   sudo docker tag nginx-image:v2 typicalguy/nginx-image:v2
-                   sudo docker push typicalguy/nginx-image:v2
+                   #sudo docker tag nginx-image:v2 typicalguy/nginx-image:v2
+                   #sudo docker push typicalguy/nginx-image:v2
                    '''
             }
         }
@@ -44,8 +41,8 @@ pipeline {
             steps {
                 //update docker service details here if needed
                 sh '''
-                sudo docker service create --name nginx-service --replicas=5 -p 80:80 typicalguy/nginx-image:v2
-                sudo docker service update --image typicalguy/nginx-image:v2 nginx-service
+                sudo docker service create --name nginx-service --replicas=5 -p 80:80 nginx-image:v2
+                #sudo docker service update --image typicalguy/nginx-image:v2 nginx-service
                    '''
             }
         }
